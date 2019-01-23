@@ -3,4 +3,5 @@ return [
     'adminEmail' => 'admin@example.com',
     'supportEmail' => 'support@example.com',
     'user.passwordResetTokenExpire' => 3600,
+    'soap-service'=>'http://yii6b.a-n/soap/index',
 ];

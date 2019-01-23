@@ -118,3 +118,8 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.errrmes,.succmess {display: none;}
+.errrmes {background: #ffaaaa;border:1px dashed red;}
+.succmess {background: #aaffaa;border:1px dashed green;}
+.errrmes.vis,.succmess.vis {display: block;}
