@@ -12,13 +12,13 @@ class SoapController extends \yii\web\Controller
 	 * признак авторизованности
 	 * @var boolean
 	 */
-	private $isLogined=false;
+	private $isLogined = false;
 
 	public function actions()
 	{
 		return [
-			'index'=>[
-				'class'=>\mongosoft\soapserver\Action::className()
+			'index' => [
+				'class' => \mongosoft\soapserver\Action::className()
 			],
 		];
 	}
@@ -30,10 +30,10 @@ class SoapController extends \yii\web\Controller
 	 */
 	public function beforeAction($act)
 	{
-		$this->enableCsrfValidation=false;
-		if (!parent::beforeAction($act))
+		$this->enableCsrfValidation = false;
+		if (!parent::beforeAction($act)) {
 			return false;
-
+		}
 		return true;
 	}
 
@@ -42,15 +42,18 @@ class SoapController extends \yii\web\Controller
 	 */
 	public function Login($args)
 	{
-		$data=[];
-		foreach($args->item as $y)
-			$data[$y->key]=$y->value;
-		if (empty($data['user']) || empty($data['pass']))
+		$data = [];
+		foreach($args->item as $y) {
+			$data[$y->key] = $y->value;
+		}
+		if (empty($data['user']) || empty($data['pass'])) {
 			return ;
+		}
 		// ищем юзера 
-		$u=User::find()->where(['and',['=','username',$data['user']],['>','status',0] ])->limit(1)->one();
-		if ($u && $u->validatePassword($data['pass']))
-			$this->isLogined=true;
+		$u = User::find()->where(['and', ['=', 'username', $data['user']], ['>', 'status', 0]])->limit(1)->one();
+		if ($u && $u->validatePassword($data['pass'])) {
+			$this->isLogined = true;
+		}
 		
 
 	}
@@ -65,25 +68,27 @@ class SoapController extends \yii\web\Controller
 	 * @soap
 	 * @return Object 
 	 */
-	public function Calculate($city='',$name='',$date='',$param1='',$param2='')
+	public function Calculate($city = '', $name = '', $date = '', $param1 = '', $param2 =' ')
 	{
-		if (!$this->isLogined)
-			return ['error'=>'Не авторезован!'];
-		$m=new SoapModel([
-			'city'=>$city,
-			'name'=>$name,
-			'date'=>$date,
-			'param1'=>$param1,
-			'param2'=>$param2
+		if (!$this->isLogined) {
+			return ['error' => 'Не авторезован!'];
+		}
+		$m = new SoapModel([
+			'city' => $city,
+			'name' => $name,
+			'date' => $date,
+			'param1' => $param1,
+			'param2' => $param2
 		]);
 
-		if ($m->validate())
+		if ($m->validate()) {
 			return [
-				'price'=>rand(),
-				'info'=>Yii::$app->security->generateRandomString(),
+				'price' => rand(),
+				'info' => Yii::$app->security->generateRandomString(),
 			];
+		}
 		
-		return ['error'=>$m->errors];
+		return ['error' => $m->errors];
 
 		
 	}

@@ -15,22 +15,22 @@ class SoapModel extends \yii\base\Model
 	public function rules()
 	{
 		return [
-			[['city','name','date','param1','param2'],'required'],
-			['date','date','format'=>'php:Y-m-d'],
-			['param1','integer'],
-			['date','testDate'],
+			[['city', 'name', 'date', 'param1', 'param2'], 'required'],
+			['date', 'date', 'format' => 'php:Y-m-d'],
+			['param1', 'integer'],
+			['date', 'testDate'],
 		];
 	}
 
 	/**
 	 * валидация даты .. 
 	 */
-	public function testDate($attr,$params)
+	public function testDate($attr, $params)
 	{
-		$date=strtotime($this->$attr);
-		$now=strtotime(date('Y-m-d'));
+		$date = strtotime($this->$attr);
+		$now = strtotime(date('Y-m-d'));
 
-		if ($date<$now)
-			$this->addError($attr,'Дата в прошлом!');
+		if ($date < $now)
+			$this->addError($attr, 'Дата в прошлом!');
 	}
 }

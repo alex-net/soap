@@ -14,7 +14,7 @@ class UserCreatorController extends \yii\console\Controller
 	 */
 	public function actionAdd($login,$pass)
 	{
-		$u=new User(['username'=>$login,'email'=>$login.'@site.com']);
+		$u = new User(['username' => $login, 'email' => $login . '@site.com']);
 		$u->setPassword($pass);
 		$u->generateAuthKey();
 		$u->save();
